@@ -105,6 +105,15 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
+     * Salva na base de dados 
+     * 
+     */
+    @FXML
+    private void handleSaveBD() {
+        //ações ligadas a salvas no bd 
+    }
+    
+    /**
      * Abre uma janela Sobre.
      */
     @FXML
