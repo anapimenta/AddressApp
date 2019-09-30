@@ -112,6 +112,7 @@ public class PersonOverviewController {
     */
     @FXML
     private void handleDeletePerson() {
+        //adicionar aqui o delete para bd 
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             personTable.getItems().remove(selectedIndex);
@@ -133,6 +134,7 @@ public class PersonOverviewController {
     */
     @FXML
     private void handleNewPerson() {
+        //adicionar aqui newPerson do bd 
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
@@ -146,6 +148,7 @@ public class PersonOverviewController {
      */
     @FXML
     private void handleEditPerson() {
+        //adicionar aqui EditPerson do BD
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);

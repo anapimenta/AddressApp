@@ -9,6 +9,9 @@ package addressapp.model;
  *
  * @author AnaPimenta
  */
-public class PersonDao {
-    
+public interface PersonDao {
+   public void newPerson();
+   public void editPerson();
+   public void delectPerson();
+
 }
