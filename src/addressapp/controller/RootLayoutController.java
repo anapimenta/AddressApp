@@ -109,7 +109,7 @@ public class RootLayoutController implements Initializable {
      */
     @FXML
     private void handleSaveBD() {
-        //ações ligadas a salvas no bd 
+        //ações ligadas a salvar no bd 
     }
     /**
      * Abre uma janela Sobre.
