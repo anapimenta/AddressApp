@@ -45,7 +45,7 @@ public class PersonDaoImpl implements PersonDao{
             pstmt.executeUpdate();
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                   // .setPersonId(generatedKeys.getInt(1));
+                   // .setPersonId(generatedKeys.getInt(1)); ainda não implementado
                 }
             }
         } catch (SQLException ex) {
@@ -54,7 +54,20 @@ public class PersonDaoImpl implements PersonDao{
    }
    @Override
    public void editPerson(Person person){
-       
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL_EDIT_PERSON)) {
+            pstmt.setString(1, person.getFirstName());
+            pstmt.setString(2,person.getLastName());
+            pstmt.setString(3, person.getStreet());
+            pstmt.setInt(4, person.getPostalCode());
+            pstmt.setString(5, person.getCity());
+            pstmt.setString(6, DateUtil.format(person.getBirthday()) );
+       //     pstmt.setInt(7, person.getPersonId); ainda não implementado
+            
+            pstmt.executeUpdate();  
+        } 
+        catch (SQLException ex) {
+             Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
    }
    @Override
    public void deletePerson(Person person){
