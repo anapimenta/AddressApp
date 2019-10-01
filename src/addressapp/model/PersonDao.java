@@ -12,6 +12,6 @@ package addressapp.model;
 public interface PersonDao {
    public void newPerson();
    public void editPerson();
-   public void delectPerson();
+   public void deletePerson();
 
 }
