@@ -22,7 +22,7 @@ import addressapp.util.DateUtil;
  */
 public class PersonDaoImpl implements PersonDao{
    
-    //private final Connection conn = ConnectToDatabase.createConnection();
+    private final Connection conn = ConnectToDatabase.createConnection();
     
     private final String SQL_NEW_PERSON = 
             "INSERT INTO Person (firstName, lastName, street, postalCode, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
