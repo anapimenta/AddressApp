@@ -31,7 +31,25 @@ public class PersonDaoImpl implements PersonDao{
             "DELETE FROM person WHERE personId=?";
     
    @Override
-   public void newPerson();
+   public void newPerson(Person person){
+        try (PreparedStatement pstmt = conn.prepareStatement(SQL_NEW_PERSON, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, person.getFirstName());
+            pstmt.setString(2,person.getLastName());
+            pstmt.setString(3, person.getStreet());
+            pstmt.setInt(4, person.getPostalCode());
+            pstmt.setString(5, person.getCity());
+           ;; pstmt.setDate(6, person.getBirthday());
+            
+            pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                   // .setPersonId(generatedKeys.getInt(1));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
    @Override
    public void editPerson();
    @Override
