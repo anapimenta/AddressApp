@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import addressapp.util.DateUtil;
 
 
 //import database.ConnectToDatabase;
@@ -38,7 +39,8 @@ public class PersonDaoImpl implements PersonDao{
             pstmt.setString(3, person.getStreet());
             pstmt.setInt(4, person.getPostalCode());
             pstmt.setString(5, person.getCity());
-           ;; pstmt.setDate(6, person.getBirthday());
+            //aparentemente a data vai ter que ser string
+            pstmt.setString(6, DateUtil.format(person.getBirthday()) );
             
             pstmt.executeUpdate();
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
@@ -51,7 +53,11 @@ public class PersonDaoImpl implements PersonDao{
         }
    }
    @Override
-   public void editPerson();
+   public void editPerson(Person person){
+       
+   }
    @Override
-   public void deletePerson();
+   public void deletePerson(Person person){
+       
+   }
 }
