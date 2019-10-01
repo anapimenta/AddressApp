@@ -25,11 +25,11 @@ public class PersonDaoImpl implements PersonDao{
     //private final Connection conn = ConnectToDatabase.createConnection();
     
     private final String SQL_NEW_PERSON = 
-            "INSERT INTO person (firstName, lastName, street, postalCode, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
+            "INSERT INTO Person (firstName, lastName, street, postalCode, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
     private final String SQL_EDIT_PERSON = 
-            "UPDATE person SET firstName=?, lastName=?, street=?, postalCode=?, city=?, birthday=? WHERE personId=?";
+            "UPDATE Person SET firstName=?, lastName=?, street=?, postalCode=?, city=?, birthday=? WHERE personId=?";
     private final String SQL_DELETE_PERSON = 
-            "DELETE FROM person WHERE personId=?";
+            "DELETE FROM Person WHERE personId=?";
     
    @Override
    public void newPerson(Person person){
@@ -46,7 +46,7 @@ public class PersonDaoImpl implements PersonDao{
             pstmt.executeUpdate();
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                   // .setPersonId(generatedKeys.getInt(1)); ainda não implementado
+                   person.setPersonId(generatedKeys.getInt(1));
                 }
             }
         } catch (SQLException ex) {
@@ -62,7 +62,7 @@ public class PersonDaoImpl implements PersonDao{
             pstmt.setInt(4, person.getPostalCode());
             pstmt.setString(5, person.getCity());
             pstmt.setString(6, DateUtil.format(person.getBirthday()) );
-       //     pstmt.setInt(7, person.getPersonId); ainda não implementado
+            pstmt.setInt(7, person.getPersonId()); 
             
             pstmt.executeUpdate();  
         } 
@@ -74,7 +74,7 @@ public class PersonDaoImpl implements PersonDao{
    public void deletePerson(Person person){
        //connection ainda não implementdado
       try (PreparedStatement pstmt = conn.prepareStatement(SQL_DELETE_PERSON)) {            
-            //pstmt.setInt(1, personId);   ID ainda não implementado 
+            pstmt.setInt(1, person.getPersonId()); 
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
