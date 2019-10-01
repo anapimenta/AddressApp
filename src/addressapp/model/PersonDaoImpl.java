@@ -33,6 +33,7 @@ public class PersonDaoImpl implements PersonDao{
     
    @Override
    public void newPerson(Person person){
+       //connection ainda não implementado 
         try (PreparedStatement pstmt = conn.prepareStatement(SQL_NEW_PERSON, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, person.getFirstName());
             pstmt.setString(2,person.getLastName());
@@ -71,6 +72,12 @@ public class PersonDaoImpl implements PersonDao{
    }
    @Override
    public void deletePerson(Person person){
-       
+       //connection ainda não implementdado
+      try (PreparedStatement pstmt = conn.prepareStatement(SQL_DELETE_PERSON)) {            
+            //pstmt.setInt(1, personId);   ID ainda não implementado 
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
    }
 }
