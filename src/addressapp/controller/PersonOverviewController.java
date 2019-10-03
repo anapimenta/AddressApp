@@ -143,7 +143,12 @@ public class PersonOverviewController {
         //adicionar aqui newPerson do bd 
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+        
         if (okClicked) {
+            
+            PersonDaoImpl Inserter = new PersonDaoImpl();
+            Inserter.deletePerson(tempPerson);
+            
             mainApp.getPersonData().add(tempPerson);
         }
     }
