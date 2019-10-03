@@ -22,7 +22,7 @@ import addressapp.util.DateUtil;
  */
 public class PersonDaoImpl implements PersonDao{
    
-    private final Connection conn = ConnectToDatabase.createConnection();
+    //private final Connection conn = ConnectToDatabase.createConnection();
     
     private final String SQL_NEW_PERSON = 
             "INSERT INTO Person (firstName, lastName, street, postalCode, city, birthday) VALUES (?, ?, ?, ?, ?, ?)";
@@ -33,21 +33,26 @@ public class PersonDaoImpl implements PersonDao{
     
    @Override
    public void newPerson(Person person){
-       //connection ainda não implementado 
-        try (PreparedStatement pstmt = conn.prepareStatement(SQL_NEW_PERSON, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, person.getFirstName());
-            pstmt.setString(2,person.getLastName());
-            pstmt.setString(3, person.getStreet());
-            pstmt.setInt(4, person.getPostalCode());
-            pstmt.setString(5, person.getCity());
-            //aparentemente a data vai ter que ser string
-            pstmt.setString(6, DateUtil.format(person.getBirthday()) );
-            
-            pstmt.executeUpdate();
-            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                   person.setPersonId(generatedKeys.getInt(1));
+      
+        try{
+            try (Connection conn = ConnectToDatabase.createConnection()) {
+                PreparedStatement pstmt = conn.prepareStatement(SQL_NEW_PERSON, Statement.RETURN_GENERATED_KEYS);
+                
+                pstmt.setString(1, person.getFirstName());
+                pstmt.setString(2,person.getLastName());
+                pstmt.setString(3, person.getStreet());
+                pstmt.setInt(4, person.getPostalCode());
+                pstmt.setString(5, person.getCity());
+                pstmt.setString(6, DateUtil.format(person.getBirthday()) );
+                
+                pstmt.executeUpdate();
+               
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        person.setPersonId(generatedKeys.getInt(1));
+                    }
                 }
+                 conn.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +60,9 @@ public class PersonDaoImpl implements PersonDao{
    }
    @Override
    public void editPerson(Person person){
-        try (PreparedStatement pstmt = conn.prepareStatement(SQL_EDIT_PERSON)) {
+        try{
+            try (Connection conn = ConnectToDatabase.createConnection()) {
+                PreparedStatement pstmt = conn.prepareStatement(SQL_EDIT_PERSON);
             pstmt.setString(1, person.getFirstName());
             pstmt.setString(2,person.getLastName());
             pstmt.setString(3, person.getStreet());
@@ -65,17 +72,22 @@ public class PersonDaoImpl implements PersonDao{
             pstmt.setInt(7, person.getPersonId()); 
             
             pstmt.executeUpdate();  
+            conn.close();
         } 
+        }
         catch (SQLException ex) {
              Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
    }
    @Override
    public void deletePerson(Person person){
-       //connection ainda não implementdado
-      try (PreparedStatement pstmt = conn.prepareStatement(SQL_DELETE_PERSON)) {            
-            pstmt.setInt(1, person.getPersonId()); 
-            pstmt.executeUpdate();
+      try{ 
+           try (Connection conn = ConnectToDatabase.createConnection()) {
+                PreparedStatement pstmt = conn.prepareStatement(SQL_DELETE_PERSON);
+                pstmt.setInt(1, person.getPersonId()); 
+                pstmt.executeUpdate();
+                conn.close();
+           }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         } 
