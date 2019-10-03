@@ -7,6 +7,7 @@ package addressapp.model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,12 +18,19 @@ import java.util.logging.Logger;
 public class ConnectToDatabase {
 
     public static Connection createConnection() {
-        String dbUrl = "url aqui";
+        String dbUrl = "jdbc:postgresql://localhost/postgres";
+        Properties props = new Properties();
+        props.setProperty("user", "postgres");
+        props.setProperty("password", "123456");
         Connection conn = null;
+        
         try {
-            conn = DriverManager.getConnection(dbUrl);
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnectToDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(dbUrl, props);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Erro durante a conexão com o Banco de Dados."
+                    + "Detalhes: " + ex.getMessage());
+            //Logger.getLogger(ConnectToDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conn;
     }
