@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import addressapp.MainApp;
 import addressapp.model.Person;
+import addressapp.model.PersonDaoImpl;
 import addressapp.util.DateUtil;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -114,7 +115,12 @@ public class PersonOverviewController {
     private void handleDeletePerson() {
         //adicionar aqui o delete para bd 
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        
         if (selectedIndex >= 0) {
+            
+            PersonDaoImpl deleter = new PersonDaoImpl();
+            deleter.deletePerson(personTable.getItems().get(selectedIndex));
+            
             personTable.getItems().remove(selectedIndex);
         } else {
             // Nada selecionado.
