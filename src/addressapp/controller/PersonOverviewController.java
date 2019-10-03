@@ -147,7 +147,7 @@ public class PersonOverviewController {
         if (okClicked) {
             
             PersonDaoImpl Inserter = new PersonDaoImpl();
-            Inserter.deletePerson(tempPerson);
+            Inserter.newPerson(tempPerson);
             
             mainApp.getPersonData().add(tempPerson);
         }
@@ -165,7 +165,7 @@ public class PersonOverviewController {
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
             if (okClicked) {
                 PersonDaoImpl Editor = new PersonDaoImpl();
-                Editor.deletePerson(selectedPerson);
+                Editor.editPerson(selectedPerson);
                 showPersonDetails(selectedPerson);
             }
 
