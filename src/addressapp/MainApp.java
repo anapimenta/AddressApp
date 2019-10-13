@@ -143,6 +143,7 @@ public class MainApp extends Application {
     public boolean showPersonEditDialog(Person person) {
         try {
             // Carrega o arquivo fxml e cria um novo stage para a janela popup.
+            
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
@@ -198,3 +199,5 @@ public class MainApp extends Application {
     }
     
 }
+
+//teste aqui

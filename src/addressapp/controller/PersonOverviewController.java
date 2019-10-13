@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import addressapp.MainApp;
 import addressapp.model.Person;
+import addressapp.model.PersonDaoImpl;
 import addressapp.util.DateUtil;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -112,8 +113,14 @@ public class PersonOverviewController {
     */
     @FXML
     private void handleDeletePerson() {
+     
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        
         if (selectedIndex >= 0) {
+            
+            PersonDaoImpl deleter = new PersonDaoImpl();
+            deleter.deletePerson(personTable.getItems().get(selectedIndex));
+            
             personTable.getItems().remove(selectedIndex);
         } else {
             // Nada selecionado.
@@ -133,9 +140,15 @@ public class PersonOverviewController {
     */
     @FXML
     private void handleNewPerson() {
+   
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+        
         if (okClicked) {
+            
+            PersonDaoImpl Inserter = new PersonDaoImpl();
+            Inserter.newPerson(tempPerson);
+            
             mainApp.getPersonData().add(tempPerson);
         }
     }
@@ -146,10 +159,13 @@ public class PersonOverviewController {
      */
     @FXML
     private void handleEditPerson() {
+
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
             if (okClicked) {
+                PersonDaoImpl Editor = new PersonDaoImpl();
+                Editor.editPerson(selectedPerson);
                 showPersonDetails(selectedPerson);
             }
 

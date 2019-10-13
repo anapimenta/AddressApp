@@ -103,7 +103,14 @@ public class RootLayoutController implements Initializable {
             Files.savePersonDataToFile(file);
         }
     }
-
+/**
+     * Salva na base de dados 
+     * 
+     */
+    @FXML
+    private void handleSaveBD() {
+        //ações ligadas a salvar no bd 
+    }
     /**
      * Abre uma janela Sobre.
      */
